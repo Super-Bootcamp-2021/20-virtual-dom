@@ -1,1 +1,1 @@
-import './lib/todo/app';
+import './lib/todo/v-dom';

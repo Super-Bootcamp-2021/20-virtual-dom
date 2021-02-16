@@ -13,7 +13,7 @@ export const delayActionMiddleware = (store) => (next) => (action) => {
   if (action.type === 'done') {
     setTimeout(() => {
       next(action);
-    }, 3000);
+    }, 1000);
   } else {
     next(action);
   }

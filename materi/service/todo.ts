@@ -20,7 +20,7 @@ export async function add(data: Todo): Promise<Todo> {
   const todoRepo = getConnection().getRepository<Todo>('Todo');
   const todo = new Todo();
   todo.task = data.task;
-  todo.done = data.done;
+  todo.done = data.done || false;
   await todoRepo.save(todo);
   return todo;
 }
