@@ -2,13 +2,18 @@ require('./main.css');
 const { Vue } = require('vue');
 const { store$ } = require('./store');
 const { summary } = require('./async-action');
+const { menuLayout } = require('./components/menu');
 // const { addTaskAsync, loadTasksAsync } = require ( './performance.client');
 // const { TodoList } = require ( './components/todo-list');
 
 new Vue({
   el: '#performance-VDOM',
+  components: {
+    menuOption: menuLayout,
+  },
   render(createElement) {
     return createElement('div', [
+      createElement('menuOption'),
       createElement(
         'button',
         {
