@@ -24,7 +24,7 @@ new Vue({
     ]);
   },
   data: {
-    state: '',
+    state: {},
   },
   mounted() {
     this.state = store$.getState();
