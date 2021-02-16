@@ -6,7 +6,7 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
  * todo model
  */
 @Entity({
-  name: 'Todo',
+  name: 'todos',
 })
 export class Todo {
   /**
