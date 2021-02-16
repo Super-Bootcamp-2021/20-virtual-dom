@@ -1,6 +1,6 @@
-import { Busboy } from 'busboy';
-import * as url  from 'url';
-import { mime } from 'mime-types';
+import * as Busboy from 'busboy';
+import * as url from 'url';
+import * as mime from 'mime-types';
 import { Writable } from 'stream';
 import { Worker } from './worker.model';
 import {
@@ -13,11 +13,17 @@ import {
 } from './worker';
 import { saveFile, readFile, ERROR_FILE_NOT_FOUND } from '../lib/storage';
 import { IncomingMessage, ServerResponse } from 'http';
-
+interface dataInterface{
+  name:string;
+  age:number;
+  bio:string;
+  address:string;
+  photo:string;
+}
 export function registerSvc(req: IncomingMessage, res: ServerResponse) {
   const busboy = new Busboy({ headers: req.headers });
 
-  const data:Worker = {
+  const data:dataInterface = {
     name:'',
     age: 0,
     bio: '',
@@ -35,15 +41,9 @@ export function registerSvc(req: IncomingMessage, res: ServerResponse) {
     }
   }
 
-  busboy.on('file', async (fieldname: any, file: { pipe: (arg0: Writable) => void; }, filename: any, encoding: any, mimetype: string) => {
+  busboy.on('file', async (fieldname:string, file:NodeJS.ReadableStream, filename: any, encoding: any, mimetype) => {
     switch (fieldname) {
       case 'photo':
-        if(!data.photo) {
-          res.statusCode = 400;
-          res.write('Worker doesnt have a photo');
-          res.end();
-          return;
-        }
         try {
           data.photo = await saveFile(file, mimetype);
         } catch (err) {
@@ -161,18 +161,21 @@ export async function removeSvc(req:IncomingMessage, res:ServerResponse):Promise
 }
 
 export async function getPhotoSvc(req:IncomingMessage, res:ServerResponse):Promise<void> {
-  const uri = url.parse(req.url!, true);
-  const objectName = uri.pathname?.replace('/photo/', '');
+  const uri:url.UrlWithParsedQuery = url.parse(req.url!, true);
+  const objectName = uri.pathname!.replace('/photo/', '');
   if (!objectName) {
     res.statusCode = 400;
     res.write('request tidak sesuai');
     res.end();
   }
   try {
-    const objectRead = await readFile(objectName!);
-    res.setHeader('Content-Type', mime.lookup(objectName));
-    res.statusCode = 200;
-    objectRead.pipe(res);
+    const objectRead = await readFile(objectName);
+    let mimeContent = mime.lookup(objectName)
+    if(typeof mimeContent === 'string'){
+      res.setHeader('Content-Type', mimeContent);
+      res.statusCode = 200;
+      objectRead.pipe(res);
+    }
   } catch (err) {
     if (err === ERROR_FILE_NOT_FOUND) {
       res.statusCode = 404;

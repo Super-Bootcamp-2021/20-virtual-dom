@@ -12,7 +12,7 @@ import {
   workersLoaded,
   clearError,
 } from './reducer';
-const thunkMiddleware = require('redux-thunk');
+import thunkMiddleware from 'redux-thunk';
 
 enum ActionType {
   ERROR = 'error',
@@ -24,11 +24,11 @@ enum ActionType {
 }
 
 export const errorAction = createAction<string>(ActionType.ERROR);
-export const loadingAction = createAction(ActionType.ERROR);
-export const registeredAction = createAction<Worker>(ActionType.ERROR);
-export const removedAction = createAction<number>(ActionType.ERROR);
-export const workersLoadedAction = createAction<Worker>(ActionType.ERROR);
-export const clearErrorAction = createAction(ActionType.ERROR);
+export const loadingAction = createAction(ActionType.LOADING);
+export const registeredAction = createAction<Worker>(ActionType.REGISTERED);
+export const removedAction = createAction<number>(ActionType.REMOVED);
+export const workersLoadedAction = createAction<Worker>(ActionType.WORKERS_LOADED);
+export const clearErrorAction = createAction(ActionType.CLEAR_ERROR);
 
 const reducer = createReducer(initialState, {
   [ActionType.ERROR]: error,
@@ -41,5 +41,5 @@ const reducer = createReducer(initialState, {
 
 export const store$ = configureStore({
   reducer,
-  middleware: [thunkMiddleware.default],
+  middleware: [thunkMiddleware],
 });

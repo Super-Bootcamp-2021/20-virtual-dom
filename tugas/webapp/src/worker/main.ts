@@ -6,7 +6,7 @@ require('./main.css');
 const form = document.getElementById('form');
 const name = document.getElementById('name');
 const age = document.getElementById('age');
-const photo = document.getElementById('photo');
+const photo = document.getElementById('photo') as HTMLInputElement;
 const bio = document.getElementById('bio');
 const address = document.getElementById('address');
 const list = document.getElementById('list');
@@ -24,7 +24,7 @@ if (form){
     if (
       !name?.nodeValue ||
       !age?.nodeValue ||
-      !photo?.files[0] ||
+      !photo?.files || !photo?.files[0] ||
       !bio?.nodeValue ||
       !address?.nodeValue
     ) {
@@ -36,7 +36,7 @@ if (form){
     store$.dispatch<any>(
       register({
         name: name.nodeValue,
-        photo: (<HTMLImageElement>photo).files[0],
+        photo: photo.files[0],
         age: age.nodeValue,
         bio: bio.nodeValue,
         address: address.nodeValue,
@@ -78,7 +78,7 @@ function render(state) {
   if (state.loading) {
     loadingTxt.style.display = '';
   } else {
-    loadingTxt.style.display = 'none;';
+    loadingTxt.style.display = 'none';
   }
 
   // render list of worker

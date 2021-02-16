@@ -16,7 +16,7 @@ export class Worker {
     age:number, 
     bio:string, 
     address:string, 
-    photo:string) {
+    photo:any) {
     this.id = id;
     this.name = name;
     this.age = age;
