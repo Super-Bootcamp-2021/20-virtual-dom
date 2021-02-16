@@ -23,6 +23,9 @@ module.exports = {
   ],
   resolve: {
     extensions: ['.js', '.ts'],
+    alias: {
+      vue$: 'vue/dist/vue.esm.js', // full build with compiler
+    },
   },
   module: {
     rules: [

@@ -2,7 +2,6 @@ import './app.css';
 import Vue, { CreateElement, VNode } from 'vue';
 import { store$ } from './store';
 import { addTaskAsync, loadTasksAsync } from './todo-client';
-import { Task } from './reducer';
 import { TodoList } from './components/todo-list';
 
 new Vue({
@@ -10,9 +9,9 @@ new Vue({
   components: {
     'todo-list': TodoList,
   },
-  render(createElement: CreateElement): VNode {
-    return createElement('div', [
-      createElement(
+  render(h: CreateElement): VNode {
+    return h('div', [
+      h(
         'form',
         {
           on: {
@@ -20,7 +19,7 @@ new Vue({
           },
         },
         [
-          createElement('input', {
+          h('input', {
             domProps: {
               value: this.task,
             },
@@ -30,12 +29,12 @@ new Vue({
               },
             },
           }),
-          createElement('button', 'tambah'),
+          h('button', 'tambah'),
         ]
       ),
-      createElement('hr'),
-      createElement('h4', 'daftar kerjaan'),
-      createElement('todo-list', { props: { todos: this.todos } }),
+      h('hr'),
+      h('h4', 'daftar kerjaan'),
+      h('todo-list', { props: { todos: this.todos } }),
     ]);
   },
   data: {
