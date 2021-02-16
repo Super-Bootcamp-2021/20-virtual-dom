@@ -35,7 +35,7 @@ const app1 = new Vue({
       h(loadingMessage, { props: { loading: this.performance.loading } }),
       h(errorMessage, { props: { error: this.performance.error } }),
       h(buttonRefresh),
-      h(summary, { props: { details: this.performance.summary } }),
+      h(summary, { props: { result: this.performance.summary } }),
     ]);
   },
   data: {
