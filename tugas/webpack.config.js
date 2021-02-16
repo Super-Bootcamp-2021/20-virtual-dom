@@ -1,4 +1,3 @@
-const DotenvWebpackPlugin = require('dotenv-webpack');
 const path = require('path');
 
 module.exports = {
@@ -16,29 +15,11 @@ module.exports = {
     contentBase: './webapp//www',
     port: 7000,
   },
-  plugins: [
-    new DotenvWebpackPlugin({
-      path: './.env',
-      safe: true,
-    }),
-  ],
-  resolve: {
-    extensions: ['.js', '.ts'],
-  },
   module: {
     rules: [
       {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
-      },
-      {
-        test: /\.yaml$/,
-        use: [{ loader: 'json-loader' }, { loader: 'yaml-loader' }],
-      },
-      {
-        test: /\.ts$/,
-        loader: 'ts-loader',
-        exclude: /node_modules/,
       },
     ],
   },
