@@ -40,7 +40,7 @@ export const TaskList = Vue.extend({
             },
             on: {
               click: () => {
-                this.taskDone(task.id);
+                this.taskCancel(task.id);
               }
             }
           }),
@@ -50,7 +50,7 @@ export const TaskList = Vue.extend({
             },
             on: {
               click: () => {
-                this.taskCancel(task.id);
+                this.taskDone(task.id);
               }
             }
           }),

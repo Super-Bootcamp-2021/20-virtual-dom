@@ -1,8 +1,8 @@
 import Vue, { CreateElement, VNode} from 'vue';
-import { loading } from '../performance/reducer';
 import { add, getList, getWorkersList } from './async-action';
 import { TaskList } from './component/task-list';
 import { clearErrorAction, errorAction, store$ } from './store';
+import './main.css';
 
 new Vue({
   el: '#app',
@@ -11,6 +11,13 @@ new Vue({
   },
   render(createElement: CreateElement) {
     const workers: VNode[] = [];
+    workers.push(createElement('option', {
+      domProps: {
+        text: '---- Pilih Pekerja -----',
+        selected: true,
+        disabled: true,
+      }
+    }))
     for (const worker of this.workers) {
       workers.push(createElement('option', {
         domProps: {
@@ -159,10 +166,7 @@ new Vue({
         return;
       }
 
-      console.log('oke 2');
-      if (this.task?.attachment[0]) {
-        console.log('oke');
-        
+      if (this.task?.attachment[0]) {  
         store$.dispatch<any>(
           add({
             job: this.task?.job,
