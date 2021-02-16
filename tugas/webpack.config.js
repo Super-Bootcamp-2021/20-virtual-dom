@@ -15,6 +15,12 @@ module.exports = {
     contentBase: './webapp//www',
     port: 7000,
   },
+  resolve: {
+    extensions: ['.js'],
+    alias: {
+      vue$: 'vue/dist/vue.esm.js', // full build with compiler
+    },
+  },
   module: {
     rules: [
       {
