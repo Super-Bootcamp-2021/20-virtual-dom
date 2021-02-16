@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
   entry: {
     tasks: './webapp/src/tasks/main-vdom.ts',
-    worker: './webapp/src/worker/main.js',
+    worker: './webapp/src/worker/main-Vdom.ts',
     performance: './webapp/src/performance/main.ts',
   },
   output: {
