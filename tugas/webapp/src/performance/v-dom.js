@@ -3,38 +3,34 @@ const { Vue } = require('vue');
 const { store$ } = require('./store');
 const { summary } = require('./async-action');
 const { menuLayout } = require('./components/menu');
-// const { addTaskAsync, loadTasksAsync } = require ( './performance.client');
-// const { TodoList } = require ( './components/todo-list');
+const { errLoadBtn } = require('./components/errLoad');
 
 new Vue({
   el: '#performance-VDOM',
   components: {
     menuOption: menuLayout,
+    errLoad: errLoadBtn,
   },
   render(createElement) {
     return createElement('div', [
       createElement('menuOption'),
-      createElement(
-        'button',
-        {
-          on: {
-            click: function () {
-              this.workers = 1;
-              this.tasks = 1;
-              this.selesai = 1;
-              this.batal = 1;
-            },
-          },
+      createElement('errLoad', {
+        props: {
+          err: this.state.error,
+          load: this.state.loading,
         },
-        'refresh'
-      ),
+      }),
       createElement('li', {}),
     ]);
   },
   data: {
-    workers: 0,
-    tasks: 0,
-    selesai: 0,
-    batal: 0,
+    state: '',
+  },
+  mounted() {
+    this.state = store$.getState();
+    store$.subscribe(() => {
+      this.state = store$.getState();
+    });
+    store$.dispatch(summary);
   },
 });
