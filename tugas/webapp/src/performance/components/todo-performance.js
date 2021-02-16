@@ -1,4 +1,4 @@
-const { Vue } = require('vue');
+const Vue = require('vue').default;
 
 const listItem = Vue.extend({
   props: ['summary'],

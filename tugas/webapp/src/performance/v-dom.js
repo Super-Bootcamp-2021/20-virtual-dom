@@ -1,5 +1,5 @@
 require('./main.css');
-const { Vue } = require('vue');
+const Vue = require('vue').default;
 const { store$ } = require('./store');
 const { summary } = require('./async-action');
 const { menuLayout } = require('./components/menu');
