@@ -1,6 +1,6 @@
-import { Busboy } from 'busboy';
-import * as url  from 'url';
-import { mime } from 'mime-types';
+import * as Busboy from 'busboy';
+import * as url from 'url';
+import * as mime from 'mime-types';
 import { Writable } from 'stream';
 import { Worker } from './worker.model';
 import {
@@ -161,18 +161,21 @@ export async function removeSvc(req:IncomingMessage, res:ServerResponse):Promise
 }
 
 export async function getPhotoSvc(req:IncomingMessage, res:ServerResponse):Promise<void> {
-  const uri = url.parse(req.url!, true);
-  const objectName = uri.pathname?.replace('/photo/', '');
+  const uri:url.UrlWithParsedQuery = url.parse(req.url!, true);
+  const objectName = uri.pathname!.replace('/photo/', '');
   if (!objectName) {
     res.statusCode = 400;
     res.write('request tidak sesuai');
     res.end();
   }
   try {
-    const objectRead = await readFile(objectName!);
-    res.setHeader('Content-Type', mime.lookup(objectName));
-    res.statusCode = 200;
-    objectRead.pipe(res);
+    const objectRead = await readFile(objectName);
+    let mimeContent = mime.lookup(objectName)
+    if(typeof mimeContent === 'string'){
+      res.setHeader('Content-Type', mimeContent);
+      res.statusCode = 200;
+      objectRead.pipe(res);
+    }
   } catch (err) {
     if (err === ERROR_FILE_NOT_FOUND) {
       res.statusCode = 404;
