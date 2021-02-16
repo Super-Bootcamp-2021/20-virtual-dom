@@ -113,18 +113,20 @@ new Vue({
       ])
     ]);
   },
-  data: {
-    state: {},
-    task: {
-      job: '',
-      assignee: '',
-      attachment: [],
-    },
-    tasks: [],
-    workers: [],
-    showloading: '',
-    error: '',
-    errorText: 'gagal memuat daftar pekerjaan',
+  data() {
+    return {
+      state: {},
+      task: {
+        job: '',
+        assignee: '',
+        attachment: [],
+      },
+      tasks: [],
+      workers: [],
+      showloading: '',
+      error: '',
+      errorText: 'gagal memuat daftar pekerjaan',
+    }
   },
   mounted() {
     this.state = store$.getState();
