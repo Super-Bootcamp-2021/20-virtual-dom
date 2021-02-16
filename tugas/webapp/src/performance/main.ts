@@ -4,7 +4,6 @@ import { summary } from './async-action';
 import { store$ } from './store';
 
 import './main.css';
-import { loading } from './reducer';
 
 // const workers = document.getElementById('workers');
 // const tasks = document.getElementById('tasks');
@@ -48,7 +47,6 @@ import { loading } from './reducer';
 //   canceled.innerText = state.summary?.task_cancelled?.toString() ?? '0';
 // }
 
-
 new Vue({
   el: '#performance-app',
   components: {
@@ -72,28 +70,42 @@ new Vue({
             'memuat...'
           )
         : null,
-      createElement('button', 
-      { on: { click: () => store$.dispatch<any>(summary) } },
-      'refresh'),
-      createElement('ul',[
-        createElement('li',[
-          createElement('span', { domProps: { id: 'workers' } }, 
-          'jumlah pekerja:')
+      createElement(
+        'button',
+        { on: { click: () => store$.dispatch<any>(summary) } },
+        'refresh'
+      ),
+      createElement('ul', [
+        createElement('li', [
+          createElement(
+            'span',
+            { domProps: { id: 'workers' } },
+            'jumlah pekerja: ' + this.summary.total_worker
+          ),
         ]),
-        createElement('li',[
-          createElement('span', { domProps: { id: 'tasks' } }, 
-          'jumlah tugas:')
+        createElement('li', [
+          createElement(
+            'span',
+            { domProps: { id: 'tasks' } },
+            'jumlah tugas: ' + this.summary.total_task
+          ),
         ]),
-        createElement('li',[
-          createElement('span', { domProps: { id: 'task-done' } },
-          'jumlah yang selesai:')
+        createElement('li', [
+          createElement(
+            'span',
+            { domProps: { id: 'task-done' } },
+            'jumlah yang selesai: ' + this.summary.task_done
+          ),
         ]),
-        createElement('li',[
-          createElement('span', { domProps: { id: 'task-canceled'} },
-          'yang dibatalkan:')       
-        ])  
-      ])  
-    ])
+        createElement('li', [
+          createElement(
+            'span',
+            { domProps: { id: 'task-canceled' } },
+            'yang dibatalkan: ' + this.summary.task_cancelled
+          ),
+        ]),
+      ]),
+    ]);
   },
   data: {
     summary: [],
@@ -104,13 +116,14 @@ new Vue({
     const state = store$.getState();
     this.loading = state.loading;
     this.error = state.error;
+    this.summary = state.summary;
     store$.subscribe(() => {
       const state = store$.getState();
       this.loading = state.loading;
       this.error = state.error;
       this.summary = state.summary;
+      console.log(this.summary);
     });
     store$.dispatch<any>(summary);
   },
-})
-  
+});
