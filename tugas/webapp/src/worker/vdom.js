@@ -2,13 +2,35 @@ import './main.css';
 import Vue from 'vue';
 import { register, getList, remove } from './async-action';
 import { store$, errorAction, clearErrorAction } from './store';
+import { WorkerList } from './worker-list';
 
 new Vue({
   el: '#worker',
+  components: {
+    'worker-list': WorkerList,
+  },
   render(element) {
     return element('div', [
-      element('p', this.message),
-      element('hr'),
+      element(
+        'p',
+        {
+          attrs: {
+            id: 'error-text',
+            class: 'error',
+          },
+        },
+        this.error
+      ),
+      element(
+        'p',
+        {
+          attrs: {
+            id: 'loading-text',
+            class: 'primary',
+          },
+        },
+        'memuat...'
+      ),
       element('h4', 'Daftarkan pekerja baru'),
       element(
         'form',
@@ -92,7 +114,7 @@ new Vue({
             },
             on: {
               input: (event) => {
-                this.photo = event.target.value;
+                this.photo = this.onFileChange;
               },
             },
           }),
@@ -141,15 +163,15 @@ new Vue({
               name: 'address',
               id: 'address',
               cols: '30',
-              rows: 3,
+              rows: '3',
               placeholder: 'alamat pekerja',
             },
             domProps: {
-              value: this.age,
+              value: this.address,
             },
             on: {
               input: (event) => {
-                this.age = event.target.value;
+                this.address = event.target.value;
               },
             },
           }),
@@ -169,27 +191,25 @@ new Vue({
       ),
       element('hr'),
       element('h4', 'Daftar Pekerja'),
-      element('div', {
-        attrs: {
-          id: 'list',
-        },
-      }),
+      element('worker-list', { props: { workers: this.workers } }),
     ]);
   },
 
   data: {
-    message: '',
+    loading: false,
+    error: null,
     name: '',
-    age: 0,
+    age: '',
     photo: '',
     bio: '',
     address: '',
-    workers: [],
+    workers: {},
   },
 
   methods: {
     addNewWorker(event) {
       event.preventDefault();
+      store$.dispatch(clearErrorAction());
       if (
         !this.name ||
         !this.age ||
@@ -213,6 +233,21 @@ new Vue({
       );
 
       event.target.reset();
+    },
+
+    onFileChange(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length) return;
+      this.createImage(files[0]);
+    },
+    createImage(file) {
+      let image = new Image();
+      let reader = new FileReader();
+
+      reader.onload = (e) => {
+        this.image = e.target.result;
+      };
+      reader.readAsDataURL(file);
     },
   },
 
