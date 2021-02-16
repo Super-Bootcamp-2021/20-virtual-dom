@@ -31,7 +31,7 @@ import {
  * ```
  */
 export function connect(
-  entities: EntitySchema[],
+  entities: EntitySchema[] | any[],
   config: ConnectionOptions
 ): Promise<Connection> {
   return createConnection({

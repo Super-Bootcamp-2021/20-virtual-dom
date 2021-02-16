@@ -1,7 +1,7 @@
 /** @module todo */
 
 import { getConnection } from 'typeorm';
-import { Todo, ITodo } from './todo.model';
+import { Todo } from './todo.model';
 
 export const ERROR_ADD_DATA_INVALID = 'data pekerjaan tidak valid';
 export const ERROR_ID_INVALID = 'task id tidak valid';
@@ -13,12 +13,14 @@ export const ERROR_TODO_NOT_FOUND = 'pekerja tidak ditemukan';
  * @returns new todo detail with id
  * @throws {@link ERROR_ADD_DATA_INVALID} when data not contain task property
  */
-export async function add(data: ITodo): Promise<ITodo> {
+export async function add(data: Todo): Promise<Todo> {
   if (!data.task) {
     throw ERROR_ADD_DATA_INVALID;
   }
   const todoRepo = getConnection().getRepository<Todo>('Todo');
-  const todo = new Todo(null, data.task, data.done);
+  const todo = new Todo();
+  todo.task = data.task;
+  todo.done = data.done;
   await todoRepo.save(todo);
   return todo;
 }

@@ -3,7 +3,7 @@ import { connect } from './lib/orm';
 import * as url from 'url';
 import { stdout } from 'process';
 import { listSvc, addSvc, removeSvc, doneSvc, undoneSvc } from './todo.service';
-import { TodoSchema } from './todo.model';
+import { Todo } from './todo.model';
 import { config } from './config';
 
 /**
@@ -12,7 +12,7 @@ import { config } from './config';
 async function init(): Promise<void> {
   try {
     console.log('connect to database');
-    await connect([TodoSchema], config.database);
+    await connect([Todo], config.database);
     console.log('database connected');
   } catch (err) {
     console.error('database connection failed');
