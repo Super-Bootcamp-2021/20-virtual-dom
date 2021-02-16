@@ -6,6 +6,7 @@ import { summary } from './async-action';
 new Vue({
   el: '#performance',
   render(CreateElement) {
+    let summary = this.loadSumm?.summary; 
     return CreateElement('div', [
       CreateElement('ul', [
         CreateElement('li', [
@@ -46,16 +47,16 @@ new Vue({
       CreateElement(
         'p',
         {
-          class: { error: this.loadSummary?.error },
+          class: { error: this.loadSumm?.error },
         },
-        this.loadSummary?.error
+        this.loadSumm?.error
       ),
       CreateElement(
         'p',
         {
-          class: { primary: this.loadSummary?.loading },
+          class: { primary: this.loadSumm?.loading },
         },
-        this.loadSummary?.loading ? 'memuat . . .' : ''
+        this.loadSumm?.loading ? 'memuat . . .' : ''
       ),
       CreateElement(
         'button',
@@ -67,27 +68,24 @@ new Vue({
         'refresh'
       ),
       CreateElement('ul', [
+        CreateElement('li', 'jumlah pekerja: ' + summary?.total_worker),
         CreateElement(
           'li',
-          'jumlah pekerja: ' + this.loadSummary?.summary?.total_worker
+          'jumlah tugas: ' + summary?.total_task
         ),
         CreateElement(
           'li',
-          'jumlah tugas: ' + this.loadSummary?.summary?.total_task
+          'yang selesai: ' + summary?.task_done
         ),
         CreateElement(
           'li',
-          'yang selesai: ' + this.loadSummary?.summary?.task_done
-        ),
-        CreateElement(
-          'li',
-          'yang dibatalkan: ' + this.loadSummary?.summary?.task_cancelled
+          'yang dibatalkan: ' + summary?.task_cancelled
         ),
       ]),
     ]);
   },
   data: {
-    loadSummary: {},
+    loadSumm: {},
   },
   methods: {
     state() {
@@ -95,9 +93,9 @@ new Vue({
     },
   },
   mounted() {
-    this.loadSummary = store$.getState();
+    this.loadSumm = store$.getState();
     store$.subscribe(() => {
-      this.loadSummary = store$.getState();
+      this.loadSumm = store$.getState();
     });
     store$.dispatch(summary);
   },
