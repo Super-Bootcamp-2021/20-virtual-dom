@@ -14,11 +14,11 @@ const defaultConfig: ServiceConfig = {
     host: 'localhost',
     port: 5432,
     username: 'postgres',
-    password: '',
-    database: 'database',
+    password: 'stratosfer10110100',
+    database: 'sanbercode',
   },
   server: {
-    port: 80,
+    port: 9999,
   },
 };
 
