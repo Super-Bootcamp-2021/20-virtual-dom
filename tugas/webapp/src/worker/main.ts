@@ -3,12 +3,12 @@ import { store$, errorAction, clearErrorAction } from './store';
 
 require('./main.css');
 
-const form = document.getElementById('form');
-const name = document.getElementById('name');
-const age = document.getElementById('age');
-const photo = document.getElementById('photo');
-const bio = document.getElementById('bio');
-const address = document.getElementById('address');
+const form = document.getElementById('form') as HTMLFormElement;
+const name = document.getElementById('name') as HTMLInputElement;
+const age = document.getElementById('age') as HTMLInputElement;
+const photo = document.getElementById('photo') as HTMLInputElement;
+const bio = document.getElementById('bio')as HTMLInputElement;
+const address = document.getElementById('address')as HTMLInputElement;
 const list = document.getElementById('list');
 const errorTxt = document.getElementById('error-text');
 const loadingTxt = document.getElementById('loading-text');
