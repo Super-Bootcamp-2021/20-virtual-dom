@@ -16,7 +16,10 @@ module.exports = {
     port: 7000,
   },
   resolve: {
-    extensions: ['.js', '.ts'],
+    extensions: ['.js'],
+    alias: {
+      vue$: 'vue/dist/vue.esm.js', // full build with compiler
+    },
   },
   module: {
     rules: [

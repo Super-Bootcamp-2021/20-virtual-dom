@@ -8,17 +8,18 @@ const { config } = require('./config');
 const workerServer = require('./worker/server');
 const tasksServer = require('./tasks/server');
 const performanceServer = require('./performance/server');
+const { config } = require('./config');
 
 async function init() {
   try {
     console.log('connect to database');
     await orm.connect([WorkerSchema, TaskSchema], {
-      type: config.database.type,
-      host: config.database.host,
-      port: config.database.port,
-      username: config.database.username,
-      password: config.database.password,
-      database: config.database.database,
+      type: config.database?.type,
+      host: config.database?.host,
+      port: config.database?.port,
+      username: config.database?.username,
+      password: config.database?.password,
+      database: config.database?.database,
     });
     console.log('database connected');
   } catch (err) {
@@ -28,11 +29,11 @@ async function init() {
   try {
     console.log('connect to object storage');
     await storage.connect('task-manager', {
-      endPoint: config.objectStorage.endPoint,
-      port: config.objectStorage.port,
-      useSSL: config.objectStorage.useSSL,
-      accessKey: config.objectStorage.accessKey,
-      secretKey: config.objectStorage.secretKey,
+      endPoint: config.minio?.endPoint,
+      port: config.minio?.port,
+      useSSL: config.minio?.useSSL,
+      accessKey: config.minio?.accessKey,
+      secretKey: config.minio?.secretKey,
     });
     console.log('object storage connected');
   } catch (err) {

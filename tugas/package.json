@@ -37,6 +37,7 @@
     "yaml-loader": "^0.6.0"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.5.0",
     "busboy": "^0.3.1",
     "mariadb": "^2.5.2",
     "mime-types": "^2.1.28",
@@ -44,16 +45,16 @@
     "mysql": "^2.18.1",
     "nats": "^1.4.12",
     "nodemon": "^2.0.7",
+    "path": "^0.12.7",
     "pg": "^8.5.1",
     "pg-hstore": "^2.3.3",
-    "redis": "^3.0.2",
-    "typeorm": "^0.2.30",
-    "@reduxjs/toolkit": "^1.5.0",
-    "rxjs": "^6.6.3",
-    "redux-thunk": "^2.3.0",
     "rc": "^1.2.8",
+    "redis": "^3.0.2",
+    "redux-thunk": "^2.3.0",
+    "rxjs": "^6.6.3",
     "swagger-ui": "^3.42.0",
     "typedoc": "^0.20.25",
+    "typeorm": "^0.2.30",
     "vue": "^2.6.12"
   }
 }
