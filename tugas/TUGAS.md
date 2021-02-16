@@ -1,12 +1,21 @@
 # Tugas
-Basis repo yang perlu diconvert adalah repo ini
-Jadi tugas harus dikerjakan dari Forkingan repo ini
 
-## Convert Web App ke dalam typescript
-- Performance
-- Task
-- Worker
-## Convert Service ke dalam typescript
-- Performance
-- Task
-- Worker
+Menggunakan virtual dom untuk merender front-end masing2 aplikasi web-app
+
+1. performance
+1. worker management
+1. task management
+
+khusus worker dan task management harus dipisah komponent utama dengan form dan daftar item-nya
+
+misal untuk worker
+
+```jsx
+<Root>
+  <AddWorker />
+  <ListWorker>
+    <Worker />
+    ...
+  </ListWorker>
+</Root>
+```
