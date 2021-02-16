@@ -1,53 +1,53 @@
-import { summary } from './async-action';
+import Vue, { CreateElement, VNode } from 'vue';
+import { summary, loadingMessage, errorMessage } from './components/performance-components';
 import { store$ } from './store';
-
+import { summary as summaryAction } from './async-action';
 import './main.css';
-import { performanceResult } from './performance.client';
-
-const workers = document.getElementById('workers');
-const tasks = document.getElementById('tasks');
-const done = document.getElementById('task-done');
-const canceled = document.getElementById('task-canceled');
-const refresh = document.getElementById('refresh');
-const errorTxt = document.getElementById('error-text');
-const loadingTxt = document.getElementById('loading-text');
-
-// presentation layer
-store$.subscribe(() => {
-  const state = store$.getState();
-  render(state);
+const buttonRefresh = Vue.extend({
+  render(createElement: CreateElement): VNode {
+    return createElement('button', {
+      attrs: {
+        id: 'refresh',
+      },
+      domProps: {
+        innerHTML: 'refresh',
+      },
+      on: {
+        click: (event) => {
+          store$.dispatch<any>(summaryAction);
+        },
+      },
+    });
+  },
 });
-const state = store$.getState();
-render(state);
 
-store$.dispatch<any>(summary);
-
-if(refresh){
-refresh.onclick = () => {
-  store$.dispatch<any>(summary);
-};
-}
-
-function render(state) {
-  // render error
-  if (errorTxt && loadingTxt) {
-  if (state.error) {
-    errorTxt.textContent = state.error.toString();
-  } else {
-    errorTxt.textContent = '';
-  }
-  if (state.loading) {
-    loadingTxt.style.display = '';
-  } else {
-    loadingTxt.style.display = 'none';
-  }
-  }
-
-  // render list of worker
-  if(workers&&tasks&&done&&canceled){
-  workers.innerText = state.summary.total_worker.toString();
-  tasks.innerText = state.summary.total_task.toString();
-  done.innerText = state.summary.task_done.toString();
-  canceled.innerText = state.summary.task_cancelled.toString();
-  }
-}
+const app1 = new Vue({
+  el: '#performance',
+  components: {
+    loadingMessage: loadingMessage,
+    errorMessage: errorMessage,
+    buttonRefresh: buttonRefresh,
+    performanceResult: summary,
+  },
+  render(h: CreateElement): VNode {
+    return h('div', [
+      h('hr'),
+      h(loadingMessage, { props: { loading: this.performance.loading } }),
+      h(errorMessage, { props: { error: this.performance.error } }),
+      h(buttonRefresh),
+      h(summary, { props: { details: this.performance.summary } }),
+    ]);
+  },
+  data: {
+    performance: {},
+  },
+  created() {
+    this.performance = store$.getState();
+  },
+  mounted() {
+    store$.subscribe(() => {
+      this.performance = store$.getState();
+    });
+    store$.dispatch<any>(summaryAction);
+  },
+});
