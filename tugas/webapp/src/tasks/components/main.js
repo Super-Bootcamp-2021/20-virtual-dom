@@ -1,4 +1,3 @@
 const Task = require('./render');
-
-Task
-
+require('../main.css')
+Task;

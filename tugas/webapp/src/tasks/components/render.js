@@ -25,7 +25,7 @@ const Task = new Vue({
         { props: { workers: this.state.workers } },
         this.state.error
       ),
-      CreateElement('task-form', { props: { workers: this.state.workers } }),
+      CreateElement('task-form', { props: { workers: this.state.workers }}),
       CreateElement('task-list', { props: { tasks: this.state.tasks } }),
     ]);
   },
@@ -33,16 +33,7 @@ const Task = new Vue({
     state: {
       loading: true,
       error: '',
-      workers: [
-        {
-          id: '1',
-          name: 'hedy',
-        },
-        {
-          id: '1',
-          name: 'hedy',
-        },
-      ],
+      workers:[],
       tasks: [],
     },
   },
@@ -52,6 +43,7 @@ const Task = new Vue({
     });
     store$.dispatch(getList);
     store$.dispatch(getWorkersList);
+    
   },
 });
 

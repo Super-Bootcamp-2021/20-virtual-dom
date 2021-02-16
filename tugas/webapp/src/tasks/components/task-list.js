@@ -10,11 +10,24 @@ const TaskList = Vue.extend({
       return CreateElement('li', {}, [
         CreateElement(
           'a',
-          { domProps: { href: task.attachment, target: '_blank' } },
+          { 
+          domProps: { href: task.attachment, target: '_blank' },
+          style : {
+            margin: '10px'
+          }          
+        },
           'lampiran'
         ),
-        CreateElement('span', task.job),
-        CreateElement('span', task.assignee),
+        CreateElement('span',{
+          style : {
+            margin: '10px'
+          }, 
+        }, task.job),
+        CreateElement('span',{
+          style : {
+            marginRight: '10px'
+          } 
+        }, task.assignee),
         CreateElement(
           'button',
           {
