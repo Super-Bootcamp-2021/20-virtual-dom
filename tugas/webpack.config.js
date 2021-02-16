@@ -2,8 +2,8 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    tasks: './webapp/src/tasks/main.ts',
     worker: './webapp/src/worker/v-dom.ts',
+    tasks: './webapp/src/tasks/v-dom.ts',
     performance: './webapp/src/performance/main.ts',
   },
   output: {

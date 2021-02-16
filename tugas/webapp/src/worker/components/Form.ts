@@ -71,9 +71,9 @@ export const Form = Vue.extend({
               name: 'photo',
               id: 'photo',
             },
-            domProps: {
-              value: this.addWorker.photo,
-            },
+            // domProps: {
+            //   value: this.addWorker.photo,
+            // },
             on: {
               input: (e) => {
                 this.addWorker.photo = e.target.files[0];
