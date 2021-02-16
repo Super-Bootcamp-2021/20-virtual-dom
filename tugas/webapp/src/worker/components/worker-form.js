@@ -1,6 +1,6 @@
 const Vue = require('vue').default;
 const { register } = require('../async-action');
-const { store$ } = require('../store');
+const { store$, errorAction, clearErrorAction } = require('../store');
 
 const WorkerForm = Vue.extend({
   props: ['workers'],
@@ -45,11 +45,10 @@ const WorkerForm = Vue.extend({
         createElement('input', {
           domProps: {
             type: 'file',
-            value: this.photo,
           },
           on: {
-            input: (event) => {
-              this.photo = event.target.files[0];
+            change: (event) => {
+              this.processFile(event);
             },
           },
         }),
@@ -92,18 +91,22 @@ const WorkerForm = Vue.extend({
       ]
     );
   },
-  data: {
-    name: '',
-    photo: '',
-    age: '',
-    bio: '',
-    address: '',
-    workers: [],
+  data: function () {
+    return {
+      name: '',
+      photo: null,
+      age: '',
+      bio: '',
+      address: '',
+    };
   },
   methods: {
+    processFile(event) {
+      this.photo = event.target.files[0];
+    },
     registerNewWorker(event) {
       event.preventDefault();
-      console.log(this.address);
+      store$.dispatch(clearErrorAction());
       if (
         !this.name ||
         !this.photo ||
@@ -111,7 +114,7 @@ const WorkerForm = Vue.extend({
         !this.bio ||
         !this.address
       ) {
-        console.log('form tidak lengkap');
+        store$.dispatch(errorAction('form isian tidak lengkap!'));
         return;
       }
 
