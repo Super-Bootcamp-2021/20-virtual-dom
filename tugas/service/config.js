@@ -2,7 +2,7 @@ const rc = require('rc');
 
 const defaultConfig = {
   database: {
-    type: 'postgres',
+    type: 'mysql',
     host: 'localhost',
     port: 5432,
     username: 'postgres',
