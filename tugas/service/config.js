@@ -2,12 +2,12 @@ const rc = require('rc');
 
 const defaultConfig = {
   database: {
-    type: 'postgres',
+    type: 'mysql',
     host: 'localhost',
-    port: 5432,
-    username: 'postgres',
+    port: 3306,
+    username: 'root',
     password: '',
-    database: 'database',
+    database: 'dubnium',
   },
   minio: {
     endPoint: '127.0.0.1',
