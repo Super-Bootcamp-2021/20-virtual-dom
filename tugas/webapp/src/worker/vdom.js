@@ -11,184 +11,143 @@ new Vue({
   },
   render(element) {
     return element('div', [
-      element(
-        'p',
-        {
-          attrs: {
-            id: 'error-text',
-            class: 'error',
-          },
-        },
-        this.error
-      ),
-      element(
-        'p',
-        {
-          attrs: {
-            id: 'loading-text',
-            class: 'primary',
-          },
-        },
-        'memuat...'
-      ),
+      element('p', { class: { error: true } }, this.error),
+      this.loading
+        ? element('p', { class: { primary: true } }, 'memuat...')
+        : null,
       element('h4', 'Daftarkan pekerja baru'),
-      element(
-        'form',
-        {
-          on: {
-            submit: this.addNewWorker,
+      element('form', { on: { submit: this.addNewWorker } }, [
+        element(
+          'label',
+          {
+            domProps: {
+              for: 'name',
+            },
           },
-        },
-        [
-          element(
-            'label',
-            {
-              attrs: {
-                for: 'name',
-              },
+          'Nama:'
+        ),
+        element('input', {
+          domProps: {
+            type: 'text',
+            name: 'name',
+            placeholder: 'misal budiman',
+          },
+          on: {
+            input: (event) => {
+              this.name = event.target.value;
             },
-            'Nama:'
-          ),
-          element('input', {
-            attrs: {
-              type: 'text',
-              name: 'name',
-              id: 'name',
-              placeholder: 'misal budiman',
-            },
-            domProps: {
-              value: this.name,
-            },
-            on: {
-              input: (event) => {
-                this.name = event.target.value;
-              },
-            },
-          }),
-          element('br'),
+          },
+        }),
+        element('br'),
 
-          element(
-            'label',
-            {
-              attrs: {
-                for: 'age',
-              },
-            },
-            'Umur:'
-          ),
-          element('input', {
-            attrs: {
-              type: 'number',
-              name: 'age',
-              id: 'age',
-              placeholder: 'misal 23',
-            },
+        element(
+          'label',
+          {
             domProps: {
-              value: this.age,
+              for: 'age',
             },
-            on: {
-              input: (event) => {
-                this.age = event.target.value;
-              },
+          },
+          'Umur:'
+        ),
+        element('input', {
+          domProps: {
+            type: 'number',
+            name: 'age',
+            placeholder: 'misal 23',
+          },
+          on: {
+            input: (event) => {
+              this.age = event.target.value;
             },
-          }),
-          element('br'),
+          },
+        }),
+        element('br'),
 
-          element(
-            'label',
-            {
-              attrs: {
-                for: 'photo',
-              },
-            },
-            'Foto:'
-          ),
-          element('input', {
-            attrs: {
-              type: 'file',
-              name: 'photo',
-              id: 'photo',
-            },
+        element(
+          'label',
+          {
             domProps: {
-              value: this.photo,
+              for: 'photo',
             },
-            on: {
-              input: (event) => {
-                this.photo = this.onFileChange;
-              },
+          },
+          'Foto:'
+        ),
+        element('input', {
+          domProps: {
+            type: 'file',
+            name: 'photo',
+            id: 'photo',
+          },
+          on: {
+            change: (event) => {
+              this.photo = event.target.files[0];
             },
-          }),
-          element('br'),
-          element(
-            'label',
-            {
-              attrs: {
-                for: 'bio',
-              },
-            },
-            'Biodata singkat:'
-          ),
-          element('br'),
-          element('textarea', {
-            attrs: {
-              name: 'bio',
-              id: 'bio',
-              cols: '30',
-              rows: '3',
-              placeholder: 'biodata singkat pekerja',
-            },
+          },
+        }),
+        element('br'),
+        element(
+          'label',
+          {
             domProps: {
-              value: this.bio,
+              for: 'bio',
             },
-            on: {
-              input: (event) => {
-                this.bio = event.target.value;
-              },
+          },
+          'Biodata singkat:'
+        ),
+        element('br'),
+        element('textarea', {
+          domProps: {
+            name: 'bio',
+            id: 'bio',
+            cols: '30',
+            rows: '3',
+            placeholder: 'biodata singkat pekerja',
+          },
+          on: {
+            input: (event) => {
+              this.bio = event.target.value;
             },
-          }),
-          element('br'),
+          },
+        }),
+        element('br'),
 
-          element(
-            'label',
-            {
-              attrs: {
-                for: 'address',
-              },
-            },
-            'Alamat:'
-          ),
-          element('br'),
-          element('textarea', {
-            attrs: {
-              name: 'address',
-              id: 'address',
-              cols: '30',
-              rows: '3',
-              placeholder: 'alamat pekerja',
-            },
+        element(
+          'label',
+          {
             domProps: {
-              value: this.address,
+              for: 'address',
             },
-            on: {
-              input: (event) => {
-                this.address = event.target.value;
-              },
+          },
+          'Alamat:'
+        ),
+        element('br'),
+        element('textarea', {
+          domProps: {
+            name: 'address',
+            id: 'address',
+            cols: '30',
+            rows: '3',
+            placeholder: 'alamat pekerja',
+          },
+          on: {
+            input: (event) => {
+              this.address = event.target.value;
             },
-          }),
-          element('br'),
-          element('br'),
+          },
+        }),
+        element('br'),
+        element('br'),
 
-          element(
-            'button',
-            {
-              attrs: {
-                type: 'submit',
-              },
+        element(
+          'button',
+          {
+            domProps: {
+              type: 'submit',
             },
-            'kirim'
-          ),
-        ]
-      ),
+          },
+          'kirim'
+        ),
+      ]),
       element('hr'),
       element('h4', 'Daftar Pekerja'),
       element('worker-list', { props: { workers: this.workers } }),
@@ -200,10 +159,10 @@ new Vue({
     error: null,
     name: '',
     age: '',
-    photo: '',
+    photo: null,
     bio: '',
     address: '',
-    workers: {},
+    workers: [],
   },
 
   methods: {
@@ -232,29 +191,25 @@ new Vue({
         })
       );
 
+      this.name = '';
+      this.age = '';
+      this.photo = null;
+      this.bio = '';
+      this.address = '';
       event.target.reset();
-    },
-
-    onFileChange(e) {
-      var files = e.target.files || e.dataTransfer.files;
-      if (!files.length) return;
-      this.createImage(files[0]);
-    },
-    createImage(file) {
-      let image = new Image();
-      let reader = new FileReader();
-
-      reader.onload = (e) => {
-        this.image = e.target.result;
-      };
-      reader.readAsDataURL(file);
     },
   },
 
   mounted() {
-    this.workers = store$.getState();
+    const state = store$.getState();
+    this.loading = state.loading;
+    this.error = state.error;
+    this.workers = state.workers;
     store$.subscribe(() => {
-      this.workers = store$.getState();
+      const state = store$.getState();
+      this.loading = state.loading;
+      this.error = state.error;
+      this.workers = state.workers;
     });
     store$.dispatch(getList);
   },

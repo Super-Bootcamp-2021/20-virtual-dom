@@ -1,18 +1,18 @@
 import Vue from 'vue';
-import { register, getList, remove } from './async-action';
-import { store$, errorAction, clearErrorAction } from './store';
+import { remove } from './async-action';
+import { store$ } from './store';
 
 export const WorkerList = Vue.extend({
   props: ['workers'],
 
   render(element) {
-    const workerList = this.$props.workers.workers.map((worker) => {
+    const workerList = this.$props.workers.map((worker) => {
       return element('div', [
         element('li', [
           element('img', {
             attrs: {
-              src: '${worker.photo}',
-              alt: 'worker.jpg',
+              href: '${worker.photo}',
+              alt: '',
               width: '30px',
               height: '30px',
             },
@@ -23,7 +23,7 @@ export const WorkerList = Vue.extend({
             {
               on: {
                 click: () => {
-                  this.removeWorker(remove(worker));
+                  this.removeWorker(worker);
                 },
               },
             },
@@ -32,7 +32,7 @@ export const WorkerList = Vue.extend({
         ]),
       ]);
     });
-    element('list', workerList);
+    return element('ol', workerList);
   },
 
   methods: {
