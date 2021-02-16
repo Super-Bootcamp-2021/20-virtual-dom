@@ -1,15 +1,11 @@
 import { SERVICE_BASEURL } from './config';
 
 export interface Task {
-  loading: boolean;
-  id?: number;
-  job?: string;
-  done?: boolean;
-  assignee?: any;
-  attachment?: any;
-  error: any;
-  workers: [];
-  tasks: [];
+  id: number;
+  job: string;
+  assignee: any;
+  attachment: string;
+  done: boolean;
 }
 
 interface ActionObject {
