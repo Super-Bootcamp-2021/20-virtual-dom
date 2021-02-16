@@ -2,14 +2,14 @@ import { SERVICE_BASEURL } from './config';
 import {TaskInterface,WorkerInterface} from '../../../service/tasks/task.model'
 
 // setup state
-interface TaskState{
+export interface TaskState{
   id:number;
   job:string;
   assignee:string;
   attachment:string;
   done:boolean;
 }
-interface WorkerState{
+export interface WorkerState{
   id:number;
   name:string
 }
