@@ -13,11 +13,17 @@ import {
 } from './worker';
 import { saveFile, readFile, ERROR_FILE_NOT_FOUND } from '../lib/storage';
 import { IncomingMessage, ServerResponse } from 'http';
-
+interface dataInterface{
+  name:string;
+  age:number;
+  bio:string;
+  address:string;
+  photo:string;
+}
 export function registerSvc(req: IncomingMessage, res: ServerResponse) {
   const busboy = new Busboy({ headers: req.headers });
 
-  const data:Worker = {
+  const data:dataInterface = {
     name:'',
     age: 0,
     bio: '',
@@ -35,15 +41,9 @@ export function registerSvc(req: IncomingMessage, res: ServerResponse) {
     }
   }
 
-  busboy.on('file', async (fieldname: any, file: { pipe: (arg0: Writable) => void; }, filename: any, encoding: any, mimetype: string) => {
+  busboy.on('file', async (fieldname:string, file:NodeJS.ReadableStream, filename: any, encoding: any, mimetype) => {
     switch (fieldname) {
       case 'photo':
-        if(!data.photo) {
-          res.statusCode = 400;
-          res.write('Worker doesnt have a photo');
-          res.end();
-          return;
-        }
         try {
           data.photo = await saveFile(file, mimetype);
         } catch (err) {
