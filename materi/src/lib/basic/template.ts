@@ -18,3 +18,6 @@ const app3 = new Vue({
     ],
   },
 });
+
+const { render } = Vue.compile(`<li>{{ todo.text }}</li>`);
+console.log(render.toString().replace(/(\{\n)(\S)/, '$1  $2'));
