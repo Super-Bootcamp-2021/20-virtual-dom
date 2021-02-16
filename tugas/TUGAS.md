@@ -19,3 +19,7 @@ misal untuk worker
   </ListWorker>
 </Root>
 ```
+
+## catatan
+- bebas menggunakan typescript / javascript keputusan LD
+- navigasi tidak perlu
