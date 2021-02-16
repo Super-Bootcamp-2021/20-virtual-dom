@@ -1,4 +1,5 @@
 import Vue, { CreateElement, VNode } from 'vue';
+import { TodoItem } from './todo-item';
 
 const app1 = new Vue({
   el: '#app-1',
@@ -51,10 +52,13 @@ const app1 = new Vue({
 
 const app2 = new Vue({
   el: '#app-2',
+  components: {
+    'todo-item': TodoItem,
+  },
   render(createElement: CreateElement): VNode {
     const todos: VNode[] = [];
     for (const todo of this.todos) {
-      todos.push(createElement('li', { style: { color: 'red' } }, todo.text));
+      todos.push(createElement('todo-item', { props: { todo: todo } }));
     }
     return createElement('ul', todos);
   },
