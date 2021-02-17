@@ -4,23 +4,22 @@ const defaultConfig = {
   database: {
     type: 'mysql',
     host: 'localhost',
-    port: 3306,
-    username: 'root',
-    password: '',
-    database: 'dubnium',
+    port: 5432,
+    username: 'postgres',
+    password: 'postgres',
+    database: 'database',
   },
-  minio: {
+  objectStorage: {
     endPoint: '127.0.0.1',
     port: 9000,
-    accessKey: 'minioadmin',
-    secretKey: 'minioadmin',
+    useSSL: false,
+    accessKey: 'admin',
+    secretKey: 'password',
   },
   server: {
-    port: {
-      worker: 7001,
-      task: 7002,
-      performance: 7003,
-    },
+    portWorker: 7001,
+    portTask: 7002,
+    portPerformance: 7003,
   },
 };
 

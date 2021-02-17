@@ -4,6 +4,7 @@ const kv = require('./lib/kv');
 const bus = require('./lib/bus');
 const { TaskSchema } = require('./tasks/task.model');
 const { WorkerSchema } = require('./worker/worker.model');
+const { config } = require('./config');
 const workerServer = require('./worker/server');
 const tasksServer = require('./tasks/server');
 const performanceServer = require('./performance/server');
