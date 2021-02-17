@@ -1,9 +1,9 @@
 import { register, getList, remove } from './async-action';
 import { store$, errorAction, clearErrorAction } from './store';
 
-import'./main.css';
+import './main.css';
 
-const form = document.getElementById('form') as HTMLFormElement; 
+const form = document.getElementById('form') as HTMLFormElement;
 const nameWorker = document.getElementById('name') as HTMLInputElement;
 const age = document.getElementById('age') as HTMLInputElement;
 const photo = document.getElementById('photo') as HTMLInputElement;
@@ -17,13 +17,6 @@ if (form && age && photo && bio && address){
   form.onsubmit = (event): void => {
     event.preventDefault();
     store$.dispatch<any>(clearErrorAction());
-    // console.log({
-    //     name: nameWorker?.value,
-    //     photo: photo?.files,
-    //     age: age?.value,
-    //     bio: bio?.value,
-    //     address: address?.value,
-    //   })
     if (!nameWorker?.value || !age?.value || !photo?.files || !bio?.value ||!address?.value ) {
       store$.dispatch(errorAction('form isian tidak lengkap!'));
       return;
