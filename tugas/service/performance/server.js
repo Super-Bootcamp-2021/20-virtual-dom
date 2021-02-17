@@ -34,7 +34,9 @@ function run(callback) {
           respond(404);
       }
     } catch (err) {
+      console.log('errornya : ', err);
       respond(500, 'unkown server error');
+      
     }
   });
 

@@ -7,6 +7,7 @@ async function summarySvc(req, res) {
     res.write(JSON.stringify(sums));
     res.end();
   } catch (err) {
+    console.log('errornya :', err)
     res.statusCode = 500;
     res.end();
     return;
