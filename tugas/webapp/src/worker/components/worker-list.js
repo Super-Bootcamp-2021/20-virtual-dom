@@ -1,8 +1,8 @@
 import Vue from 'vue';
-import { remove } from './async-action';
-import { store$ } from './store';
+import { remove } from '../async-action';
+import { store$ } from '../store';
 
-export const WorkerList = Vue.extend({
+export const ListWorker = Vue.extend({
   props: ['workers'],
 
   render(element) {
