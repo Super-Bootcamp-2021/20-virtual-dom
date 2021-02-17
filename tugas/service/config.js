@@ -20,7 +20,6 @@ const defaultConfig = {
     taskPort: 7002,
     workerPort: 7001,
     performancePort: 7003,
-
   },
 };
 

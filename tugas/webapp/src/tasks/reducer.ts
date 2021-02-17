@@ -7,10 +7,10 @@ export interface Task {
   [propName: string]: any;
 }
 export interface State {
-  loading: boolean,
-  error: string | null,
-  workers: Worker[],
-  tasks: Task[],
+  loading: boolean;
+  error: string | null;
+  workers: Worker[];
+  tasks: Task[];
 }
 
 interface ActionObject {
@@ -100,7 +100,10 @@ export function tasksLoaded(state: State, action: ActionObjectTasks): State {
   return state;
 }
 
-export function workersLoaded(state: State, action: ActionObjectWorkers): State {
+export function workersLoaded(
+  state: State,
+  action: ActionObjectWorkers
+): State {
   state.workers = action.payload.map((worker) => ({
     id: worker.id,
     name: worker.name,
