@@ -23,7 +23,7 @@ async function init() {
     await storage.connect('task-manager', config.storage);
     console.log('object storage connected');
   } catch (err) {
-    console.error('object storage connection failed');
+    console.error(err);
     process.exit(1);
   }
   try {
