@@ -4,7 +4,7 @@ module.exports = {
   entry: {
     tasks: './webapp/src/tasks/main.ts',
     worker: './webapp/src/worker/main.ts',
-    performance: './webapp/src/performance/main.ts',
+    performance: './webapp/src/performance/v-dom.ts',
   },
   output: {
     path: path.resolve(__dirname, 'www'),

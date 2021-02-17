@@ -4,7 +4,7 @@
     "sourceMap": true,
     "allowJs": true,
     "target": "ES6",
-    "strictNullChecks": true,
+    //"strictNullChecks": false,
     "moduleResolution": "Node",
     
   },
