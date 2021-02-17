@@ -2,9 +2,9 @@ const path = require('path');
 
 module.exports = {
   entry: {
+    performance: './webapp/src/performance/v-dom.ts',
     worker: './webapp/src/worker/v-dom.ts',
     tasks: './webapp/src/tasks/v-dom.ts',
-    performance: './webapp/src/performance/main.ts',
   },
   output: {
     path: path.resolve(__dirname, 'www'),

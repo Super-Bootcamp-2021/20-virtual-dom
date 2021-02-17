@@ -13,7 +13,7 @@ export const Header = Vue.extend({
         createElement('li', [
           createElement(
             'a',
-            { attrs: { href: 'perfromance.html' } },
+            { attrs: { href: 'performance.html' } },
             'kinerja'
           ),
         ]),
