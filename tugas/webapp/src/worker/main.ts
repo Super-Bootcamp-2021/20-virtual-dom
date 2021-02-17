@@ -1,88 +1,56 @@
 import './main.css';
-import { register, getList, remove } from './async-action';
-import { store$, errorAction, clearErrorAction } from './store';
+import Vue, { CreateElement, VNode } from 'vue';
+import { getList } from './async-action';
+import { store$ } from './store';
+import Navigation from './components/navigation';
+import Form from './components/form';
+import WorkerList from './components/worker-list';
 
-const form = <HTMLFormElement>document.getElementById('form');
-const name = <HTMLInputElement>document.getElementById('name');
-const age = <HTMLInputElement>document.getElementById('age');
-const photo = <HTMLInputElement>document.getElementById('photo');
-const bio = <HTMLInputElement>document.getElementById('bio');
-const address = <HTMLInputElement>document.getElementById('address');
-const list = document.getElementById('list');
-const errorTxt = document.getElementById('error-text');
-const loadingTxt = document.getElementById('loading-text');
-
-if(form && name && age && photo && bio && address){
-  form.onsubmit = (event) => {
-    event.preventDefault();
-    store$.dispatch<any>(clearErrorAction());
-    if (
-      !name.value ||
-      !age.value ||
-      !photo.files![0] ||
-      !bio.value ||
-      !address.value
-    ) {
-      store$.dispatch<any>(errorAction('form isian tidak lengkap!'));
-      return;
-    }
-  
-    // register user
-    store$.dispatch<any>(
-      register({
-        name: name.value,
-        photo: photo.files![0],
-        age: age.value,
-        bio: bio.value,
-        address: address.value,
-      })
-    );
-  
-    // reset form
-    form.reset();
-  };
-}
-
-// presentation layer
-store$.subscribe(() => {
-  const state = store$.getState();
-  render(state);
+new Vue({
+  el: '#worker',
+  components: {
+    navigation: Navigation,
+    'worker-list': WorkerList,
+    'form-worker': Form,
+  },
+  render(createElement: CreateElement): VNode {
+    return createElement('div', [
+      createElement('navigation'),
+      createElement(
+        'p',
+        { domProps: { id: 'error-text' }, class: { error: true } },
+        this.error
+      ),
+      this.loading
+        ? createElement(
+            'p',
+            { domProps: { id: 'loading-text' }, class: { primary: true } },
+            'memuat...'
+          )
+        : null,
+      createElement('h4', 'Daftarkan pekerjaan baru'),
+      createElement('form-worker'),
+      createElement('hr'),
+      createElement('h4', 'Daftar pekerja'),
+      createElement('worker-list', { props: { workers: this.worker } }),
+    ]);
+  },
+  data: {
+    worker: [],
+    error: '',
+    loading: false,
+  },
+  mounted() {
+    const state = store$.getState();
+    this.worker = state.workers;
+    this.loading = state.loading;
+    this.error = state.error;
+    store$.subscribe(() => {
+      const state = store$.getState();
+      this.worker = state.workers;
+      this.loading = state.loading;
+      this.error = state.error;
+    });
+    store$.dispatch<any>(getList);
+  },
 });
-const state = store$.getState();
-render(state);
-
-store$.dispatch<any>(getList);
-
-function render(state) {
-  if(errorTxt && list && loadingTxt){
-    // render error
-    if (state.error) {
-      errorTxt.textContent = state.error.toString();
-    } else {
-      errorTxt.textContent = '';
-    }
-    if (state.loading) {
-      loadingTxt.style.display = 'block';
-    } else {
-      loadingTxt.style.display = 'none';
-    }
-  
-    // render list of worker
-    list.innerHTML = '';
-    for (let i = 0; i < state?.workers?.length; i++) {
-      const worker = state.workers[i];
-      const li = document.createElement('div');
-      const rmvBtn = document.createElement('button');
-      rmvBtn.innerText = 'hapus';
-      rmvBtn.onclick = function () {
-        store$.dispatch<any>(remove(worker.id));
-      };
-      li.innerHTML = `
-        <img src="${worker.photo}" alt="" width="30px" height="30px" />
-        <span>${worker.name}</span>
-      `;
-      li.append(rmvBtn);
-      list.append(li);
-    }
-  }
-}
