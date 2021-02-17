@@ -107,18 +107,14 @@ export const FormTask = Vue.extend({
       job: '',
       assignee: '',
       attachment: {},
-    }
+    };
   },
   methods: {
     submitNewTask(event) {
       event.preventDefault();
-        // console.log(this.job, this.assignee, this.attachment);
+      // console.log(this.job, this.assignee, this.attachment);
       store$.dispatch(clearErrorAction());
-      if (
-        !this.job ||
-        !this.assignee ||
-        !this.attachment
-      ) {
+      if (!this.job || !this.assignee || !this.attachment) {
         store$.dispatch(errorAction('form isian tidak lengkap!'));
         return;
       }

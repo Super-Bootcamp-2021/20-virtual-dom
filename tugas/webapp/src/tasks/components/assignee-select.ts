@@ -4,21 +4,6 @@ import { Worker } from '../reducer';
 export const AssigneeSelect = Vue.extend({
   props: ['workers'],
   render(createElement: CreateElement): VNode {
-    // let temp = [
-    //   {
-    //     id: 0,
-    //     name: 'Name',
-    //   },
-    //   {
-    //     id: 1,
-    //     name: 'Budi',
-    //   },
-    //   {
-    //     id: 2,
-    //     name: 'Susi',
-    //   },
-    // ];
-    // const workerList = temp.map((worker) => {
     var workerList = [];
     if (this.$props.workers) {
       workerList = this.$props.workers.map((worker: Worker) => {

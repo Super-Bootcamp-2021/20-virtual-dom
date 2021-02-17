@@ -31,7 +31,9 @@ export const addedAction = createAction<Task>(ActionType.ADDED);
 export const doneAction = createAction<number>(ActionType.DONE);
 export const canceledAction = createAction<number>(ActionType.CANCELED);
 export const tasksLoadedAction = createAction<Task[]>(ActionType.TASKS_LOADED);
-export const workersLoadedAction = createAction<Worker[]>(ActionType.WORKERS_LOADED);
+export const workersLoadedAction = createAction<Worker[]>(
+  ActionType.WORKERS_LOADED
+);
 export const clearErrorAction = createAction(ActionType.CLEAR_ERROR);
 
 const reducer = createReducer(initialState, {

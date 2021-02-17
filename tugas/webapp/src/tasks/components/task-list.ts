@@ -21,9 +21,8 @@ export const TaskList = Vue.extend({
                     'button',
                     {
                       on: {
-                        // click: this.doneBtn(task.id),
                         click: () => {
-                          store$.dispatch<any>(done(task.id));
+                          this.doneBtn(task.id);
                         },
                       },
                     },
@@ -33,9 +32,8 @@ export const TaskList = Vue.extend({
                     'button',
                     {
                       on: {
-                        // click: this.cancelBtn(task.id),
                         click: () => {
-                          store$.dispatch<any>(cancel(task.id));
+                          this.cancelBtn(task.id);
                         },
                       },
                     },
@@ -49,14 +47,11 @@ export const TaskList = Vue.extend({
     return createElement('ol', taskList);
   },
   methods: {
-    // Kok Error
-    doneBtn(id) {
-      console.log(id);
-      // store$.dispatch<any>(done(id));
+    doneBtn(id: number) {
+      store$.dispatch<any>(done(id));
     },
-    cancelBtn(id) {
-      console.log(id);
-      // store$.dispatch<any>(cancel(id));
+    cancelBtn(id: number) {
+      store$.dispatch<any>(cancel(id));
     },
   },
 });
