@@ -1,3 +1,4 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 import Vue, { CreateElement, VNode } from 'vue';
 import Navigation from './components/navigation';
 import { summary } from './async-action';

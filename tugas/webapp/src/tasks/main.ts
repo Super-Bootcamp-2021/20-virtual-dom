@@ -1,3 +1,4 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 import Vue, { CreateElement, VNode } from 'vue';
 import { getList, getWorkersList } from './async-action';
 import { store$ } from './store';
@@ -15,9 +16,6 @@ new Vue({
     'form-task': Form,
   },
   render(createElement: CreateElement): VNode {
-    const workerList = this.worker.map((w: any) => {
-      return createElement('option', { domProps: { value: w.id } }, w.name);
-    });
     return createElement('div', [
       createElement('navigation'),
       createElement(
