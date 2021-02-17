@@ -57,9 +57,9 @@ const app2 = new Vue({
   },
   render(createElement: CreateElement): VNode {
     const todos: VNode[] = [];
-      for (const todo of this.todos) {
-        todos.push(createElement('todo-item', { props: { todo: todo } }));
-      }
+    for (const todo of this.todos) {
+      todos.push(createElement('todo-item', { props: { todo: todo } }));
+    }
     return createElement('ul', todos);
   },
   data: {
