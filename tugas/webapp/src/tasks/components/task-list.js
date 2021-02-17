@@ -10,24 +10,32 @@ const TaskList = Vue.extend({
       return CreateElement('li', {}, [
         CreateElement(
           'a',
-          { 
-          domProps: { href: task.attachment, target: '_blank' },
-          style : {
-            margin: '10px'
-          }          
-        },
+          {
+            domProps: { href: task.attachment, target: '_blank' },
+            style: {
+              margin: '10px',
+            },
+          },
           'lampiran'
         ),
-        CreateElement('span',{
-          style : {
-            margin: '10px'
-          }, 
-        }, task.job),
-        CreateElement('span',{
-          style : {
-            marginRight: '10px'
-          } 
-        }, task.assignee),
+        CreateElement(
+          'span',
+          {
+            style: {
+              margin: '10px',
+            },
+          },
+          task.job
+        ),
+        CreateElement(
+          'span',
+          {
+            style: {
+              marginRight: '10px',
+            },
+          },
+          task.assignee
+        ),
         CreateElement(
           'button',
           {
@@ -36,9 +44,9 @@ const TaskList = Vue.extend({
                 store$.dispatch(cancel(task.id));
               },
             },
-            style : {
-              display: task.done ? 'none' : 'inherit'
-            }           
+            style: {
+              display: task.done ? 'none' : 'inherit',
+            },
           },
           'batalkan'
         ),
@@ -53,9 +61,9 @@ const TaskList = Vue.extend({
             domProps: {
               innerText: task.done ? 'sudah selesai' : 'selesai',
             },
-            attrs : {
-              disabled : task.done ? true : false,
-            }
+            attrs: {
+              disabled: task.done ? true : false,
+            },
           },
           'selesai'
         ),

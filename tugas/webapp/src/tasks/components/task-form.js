@@ -11,7 +11,7 @@ const {
 const { store$, errorAction, clearErrorAction } = require('../store');
 
 const TaskForm = Vue.extend({
-  props: ['workers'],  
+  props: ['workers'],
   render(CreateElement) {
     const WorkerList = this.$props.workers.map((worker) => {
       return CreateElement(
@@ -112,7 +112,7 @@ const TaskForm = Vue.extend({
           attachment: this.attachment,
         })
       );
-      event.target.reset()
+      event.target.reset();
     },
     fileEvent(event) {
       const attachment = event.target.files[0];

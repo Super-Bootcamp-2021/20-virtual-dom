@@ -12,7 +12,7 @@ const {
 } = require('../async-action');
 const { store$, errorAction, clearErrorAction } = require('../store');
 
-const Task = new Vue({
+new Vue({
   el: '#task',
   components: {
     'task-form': TaskForm,
@@ -25,7 +25,7 @@ const Task = new Vue({
         { props: { workers: this.state.workers } },
         this.state.error
       ),
-      CreateElement('task-form', { props: { workers: this.state.workers }}),
+      CreateElement('task-form', { props: { workers: this.state.workers } }),
       CreateElement('task-list', { props: { tasks: this.state.tasks } }),
     ]);
   },
@@ -33,7 +33,7 @@ const Task = new Vue({
     state: {
       loading: true,
       error: '',
-      workers:[],
+      workers: [],
       tasks: [],
     },
   },
@@ -43,8 +43,5 @@ const Task = new Vue({
     });
     store$.dispatch(getList);
     store$.dispatch(getWorkersList);
-    
   },
 });
-
-exports.Task = Task;
