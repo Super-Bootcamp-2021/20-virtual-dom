@@ -1,38 +1,53 @@
-import Vue, { CreateElement } from 'vue';
-import { cancel, done } from '../async-action';
+const Vue = require('vue').default;
+const { cancel, done } = require('../async-action');
+const { store$ } = require('../store');
 
-export const TaskList = Vue.extend({
+const TaskList = Vue.extend({
   props: ['tasks'],
-  render() {
+  render(createElement) {
     const taskList = this.$props.tasks.map((task) => {
-      return CreateElement('div', [
-        CreateElement(
+      return createElement('div', [
+        createElement(
           'a',
-          { domProps: { href: task.attachment, target: 'blank' } },
-          'attachment'
+          {
+            domProps: {
+              href: task.attachment,
+              target: '_blank',
+            },
+          },
+          'lampiran'
         ),
-        ' ',
-        CreateElement('span', task.job),
-        ' ',
-        CreateElement('span', task.assignee),
-        ' ',
+        createElement('span', ` ${task.job}`),
+        createElement('span', task.assignee),
         task.done
-          ? CreateElement('span', 'selesai')
-          : CreateElement('span', [
-              CreateElement(
+          ? createElement('span', ' sudah selesai')
+          : [
+              createElement(
                 'button',
-                { on: { click: () => this.doneTask(task.id) } },
+                {
+                  on: {
+                    click: () => {
+                      this.doneTask(task.id);
+                    },
+                  },
+                },
                 'selesai'
               ),
-              CreateElement(
+              createElement(
                 'button',
-                { on: { click: () => this.cancelTask(task.id) } },
+                {
+                  on: {
+                    click: () => {
+                      this.cancelTask(task.id);
+                    },
+                  },
+                },
                 'batal'
               ),
-            ]),
+            ],
       ]);
     });
-    return CreateElement('div', taskList);
+    return createElement('div', taskList);
   },
   methods: {
     doneTask(id) {
@@ -43,3 +58,7 @@ export const TaskList = Vue.extend({
     },
   },
 });
+
+module.exports = {
+  TaskList,
+};

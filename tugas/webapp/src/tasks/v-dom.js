@@ -1,124 +1,68 @@
-import Vue, { CreateElement } from 'vue';
-import { getList, add, getWorkersList } from './async-action';
-import '../main.css';
-import { store$, errorAction, clearErrorAction } from './store';
-import { TaskList } from './component/task-list';
+const Vue = require('vue').default;
+
+const { getList, getWorkersList } = require('./async-action');
+require('./main.css');
+const { store$ } = require('./store');
+//const { TaskList } = require('./component/task-list');
+const { TaskForm } = require('./component/task-form');
+const { TaskList } = require('./component/task-list');
 
 new Vue({
   el: '#task-app',
-  component: {
-    'tasks-list': TaskList,
+  components: {
+    'task-form': TaskForm,
+    'task-list': TaskList,
   },
-  render() {
-    const workersLists = this.workers.map((worker) => {
-      return CreateElement(
-        'option',
-        {
-          domProps: {
-            value: worker.id,
-          },
+  render(createElement) {
+    return createElement('div', [
+      createElement('p', {
+        class: { error: 'error' },
+        domProps: {
+          innerText: this.error,
         },
-        worker.name
-      );
-    });
-    return CreateElement('div', [
-      CreateElement(
-        'form',
-        {
-          on: {
-            submit: this.submitNewTask,
-          },
+      }),
+      createElement('p', {
+        class: { primary: 'primary' },
+        style: { display: this.loading },
+        domProps: {
+          innerText: 'memuat...',
         },
-        [
-          CreateElement('p', 'Tugas : '),
-          CreateElement('textarea', {
-            domProps: {
-              cols: '30',
-              rows: '3',
-            },
-            on: {
-              input: (event) => {
-                this.newTask.job = event.target.value;
-              },
-            },
-          }),
-          CreateElement('p', 'Assignee'),
-          CreateElement(
-            'select',
-            {
-              on: {
-                change: (event) => {
-                  this.newTask.assignee_id =
-                    event.target.children[event.target.selectedIndex].value;
-                },
-              },
-            },
-            [
-              CreateElement(
-                'option',
-                {
-                  domProps: {
-                    value: '',
-                  },
-                },
-                'Pilih pekerja'
-              ),
-              workersLists,
-            ]
-          ),
-          CreateElement('input', {
-            domProps: {
-              type: 'file',
-            },
-            on: {
-              change: (event) => {
-                this.newTask.attachment = event.target.files[0];
-              },
-            },
-          }),
-          CreateElement('button', 'simpan'),
-        ]
-      ),
-      CreateElement('hr'),
-      CreateElement('h4', 'Daftar Tugas'),
-      CreateElement('tasks-list', {
-        props: {
-          tasks,
-        },
+      }),
+      createElement('h4', 'Buat tugas baru'),
+      createElement('task-form', {
+        props: { workers: this.workers },
+      }),
+      createElement('hr'),
+      createElement('h4', 'Daftar tugas'),
+      createElement('task-list', {
+        props: { tasks: this.tasks },
       }),
     ]);
   },
-  data: {
-    newTask: {
-      job: '',
-      assignee_id: null,
-      attachment: null,
-    },
-    tasks: [],
-    workers: [],
-  },
-  methods: {
-    submitNewTask(event) {
-      event.preventDefault();
-      if (
-        this.newTask.job === '' ||
-        this.newTask.assignee_id === null ||
-        this.newTask.attachment === null
-      ) {
-        return;
-      }
-      store$.dispatch(add(this.newTask));
-      event.target.reset();
-    },
+  data: function () {
+    return {
+      tasks: [],
+      error: null,
+      loading: 'none',
+      workers: [],
+    };
   },
   mounted() {
-    this.tasks = store$.getState().tasks;
-    this.workers = store$.getState().workers;
+    let state;
     store$.subscribe(() => {
-      this.tasks = store$.getState().tasks;
-      this.workers = store$.getState().workers;
+      state = store$.getState();
+      this.tasks = state.tasks;
+      this.error = state.error;
+      this.workers = state.workers;
+
+      if (state.loading) {
+        this.loading = 'block';
+      } else {
+        this.loading = 'none';
+      }
     });
     store$.dispatch(getList);
     store$.dispatch(getWorkersList);
+    console.log(typeof state.loading);
   },
 });
